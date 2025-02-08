@@ -1,7 +1,7 @@
 import React from 'react';
 import AppRouter from './infraestructure/api/routes/AppRouter';
 
-const App = () => {
+function App() {
   return (
     <div className="container mx-auto">
       <AppRouter />

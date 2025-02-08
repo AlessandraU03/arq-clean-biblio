@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getBooksUseCase, deleteBookUseCase } from "../../application/book-useCase/bookUseCase";
 import BookForm from "./BookForm";
+import BookCard from "./BookCard";
 
-const BookList = () => {
+function BookList() {
   const [books, setBooks] = useState([]);
   const [bookToEdit, setBookToEdit] = useState(null);
 
@@ -11,7 +12,6 @@ const BookList = () => {
     "/public/book1.jpg", // Primera imagen
     "/public/book2.jpg", // Segunda imagen
     "/public/book3.jpg", // Tercera imagen
-    
   ];
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const BookList = () => {
   }, []);
 
   const handleDelete = async (id) => {
-    await deleteBookUseCase(id); // Eliminar de la base de datos
+    await deleteBookUseCase(id);
     const updatedBooks = books.filter((book) => book.id !== id);
     setBooks(updatedBooks);
   };
@@ -36,37 +36,22 @@ const BookList = () => {
 
   return (
     <div>
-      <BookForm setBooks={handleAddOrUpdate} bookToEdit={bookToEdit} setBookToEdit={setBookToEdit} />
+      <div className="flex justify-end pr-6">
+        <BookForm setBooks={handleAddOrUpdate} bookToEdit={bookToEdit} setBookToEdit={setBookToEdit} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-6 pr-6 pl-6">
         {books.map((book) => (
-          <div key={book.id} className="bg-white border rounded-lg shadow-lg p-4">
-            <img
-              src={book.image}
-              alt={book.name}
-              className="w-full h-60 object-contain mb-4 rounded-lg"
-            />
-            <h3 className="text-lg font-semibold">{book.name}</h3>
-            <p className="text-sm text-gray-600">{book.autor}</p>
-            <p className="text-sm text-gray-500">{book.categoria}</p>
-            <div className="mt-4 flex justify-between">
-              <button
-                onClick={() => setBookToEdit(book)}
-                className="bg-yellow-500 text-white p-2 rounded-md"
-              >
-                Editar
-              </button>
-              <button
-                onClick={() => handleDelete(book.id)}
-                className="bg-red-500 text-white p-2 rounded-md"
-              >
-                Eliminar
-              </button>
-            </div>
-          </div>
+          <BookCard
+            key={book.id}
+            book={book}
+            onEdit={setBookToEdit} // Pasa la función de edición
+            onDelete={handleDelete} // Pasa la función de eliminación
+          />
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default BookList;

@@ -4,7 +4,7 @@ import HomePage from "../../../pages/HomePage";
 import ComicPage from "../../../pages/ComicPage";
 import BookPage from "../../../pages/BookPage";
 
-const AppRouter = () => {
+function AppRouter() {
   return (
     <Router>
       <Navbar />

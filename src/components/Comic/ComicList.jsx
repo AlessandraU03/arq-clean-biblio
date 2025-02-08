@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { getComicsUseCase, deleteComicUseCase } from "../../application/comic-useCase/comicUseCase";
 import ComicForm from "./ComicForm";
+import ComicCard from "./ComicCard";
 
-const ComicList = () => {
+function ComicList() {
   const [comics, setComics] = useState([]);
   const [comicToEdit, setComicToEdit] = useState(null);
 
@@ -34,37 +35,22 @@ const ComicList = () => {
 
   return (
     <div>
-      <ComicForm setComics={handleAddOrUpdate} comicToEdit={comicToEdit} setComicToEdit={setComicToEdit} />
+      <div className="flex justify-end pr-6">
+        <ComicForm setComics={handleAddOrUpdate} comicToEdit={comicToEdit} setComicToEdit={setComicToEdit} />
+      </div>
+
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 mt-6 pr-6 pl-6">
         {comics.map((comic) => (
-          <div key={comic.id} className="bg-white border rounded-lg shadow-lg p-4">
-            <img
-              src={comic.image}
-              alt={comic.name}
-              className="w-full h-60 object-contain mb-4 rounded-lg"
-            />
-            <h3 className="text-lg font-semibold">{comic.name}</h3>
-            <p className="text-sm text-gray-600">{comic.autor}</p>
-            <p className="text-sm text-gray-500">{comic.editorial}</p>
-            <div className="mt-4 flex justify-between">
-              <button
-                onClick={() => setComicToEdit(comic)}
-                className="bg-yellow-500 text-white p-2 rounded-md"
-              >
-                Editar
-              </button>
-              <button
-                onClick={() => handleDelete(comic.id)}
-                className="bg-red-500 text-white p-2 rounded-md"
-              >
-                Eliminar
-              </button>
-            </div>
-          </div>
+          <ComicCard
+            key={comic.id}
+            comic={comic}
+            onEdit={setComicToEdit} // Pasa la función de edición
+            onDelete={handleDelete} // Pasa la función de eliminación
+          />
         ))}
       </div>
     </div>
   );
-};
+}
 
 export default ComicList;

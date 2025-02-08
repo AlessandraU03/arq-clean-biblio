@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { addComicUseCase, updateComicUseCase } from "../../application/comic-useCase/comicUseCase";
 
-const ComicForm = ({ setComics, comicToEdit, setComicToEdit }) => {
+function ComicForm({ setComics, comicToEdit, setComicToEdit }){
   const [name, setName] = useState("");
   const [autor, setAutor] = useState("");
   const [editorial, setEditorial] = useState("");
@@ -40,10 +40,10 @@ const ComicForm = ({ setComics, comicToEdit, setComicToEdit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="mb-4">
-      <input type="text" placeholder="Título" value={name} onChange={(e) => setName(e.target.value)} className="border p-1 mr-2" required />
-      <input type="text" placeholder="Autor" value={autor} onChange={(e) => setAutor(e.target.value)} className="border p-1 mr-2" required />
-      <input type="text" placeholder="Editorial" value={editorial} onChange={(e) => setEditorial(e.target.value)} className="border p-1 mr-2" required />
-      <button type="submit" className="bg-blue-500 text-white p-1 rounded">
+      <input type="text" placeholder="Título" value={name} onChange={(e) => setName(e.target.value)} className="border p-2 mr-2" required />
+      <input type="text" placeholder="Autor" value={autor} onChange={(e) => setAutor(e.target.value)} className="border p-2 mr-2" required />
+      <input type="text" placeholder="Editorial" value={editorial} onChange={(e) => setEditorial(e.target.value)} className="border p-2 mr-2" required />
+      <button type="submit" className="bg-black text-white p-2 rounded">
         {comicToEdit ? "Actualizar" : "Agregar"}
       </button>
       {comicToEdit && (
